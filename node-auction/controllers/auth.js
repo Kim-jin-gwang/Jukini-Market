@@ -1,10 +1,17 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/user');
 
+// 가입 축하 포인트: 클라이언트가 아닌 서버가 지급액을 결정한다.
+// (기존에는 req.body.money를 그대로 저장해 임의 금액 가입이 가능했던 보안 결함이 있었음)
+const SIGNUP_POINT = Number(process.env.SIGNUP_POINT || 1000000);
+
 exports.join = async (req, res, next) => {
-  const { email, nick, password, money } = req.body;
+  const { email, nick, password } = req.body;
   try {
+    if (!email || !nick || !password) {
+      return res.redirect('/join?joinError=이메일, 닉네임, 비밀번호를 모두 입력해주세요.');
+    }
     const exUser = await User.findOne({ where: { email } });
     if (exUser) {
       return res.redirect('/join?joinError=이미 가입된 이메일입니다.');
@@ -14,7 +21,7 @@ exports.join = async (req, res, next) => {
       email,
       nick,
       password: hash,
-      money,
+      money: SIGNUP_POINT,
     });
     return res.redirect('/');
   } catch (error) {
@@ -30,7 +37,7 @@ exports.login = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.redirect(`/?loginError=${info.message}`);
+      return res.redirect(`/?loginError=${encodeURIComponent(info.message)}`);
     }
     return req.login(user, (loginError) => {
       if (loginError) {

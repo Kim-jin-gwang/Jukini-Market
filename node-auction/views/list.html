@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section>
+    <h1 class="page-title">내 구매 목록</h1>
+    {% if purchases.length %}
+      <table class="data-table">
+        <thead>
+          <tr><th>상품</th><th>수량</th><th>결제 포인트</th><th>메시지</th><th>구매 시각</th></tr>
+        </thead>
+        <tbody>
+          {% for p in purchases %}
+            <tr>
+              <td><a href="/good/{{p.Good.id}}">{{p.Good.name}}</a></td>
+              <td>{{p.bid}}개</td>
+              <td>{{(p.bid * p.Good.price).toLocaleString()}}P</td>
+              <td>{{p.msg or '-'}}</td>
+              <td>{{p.createdAt.toLocaleString('ko-KR')}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="empty">아직 구매한 상품이 없습니다. <a href="/">상품 둘러보기 →</a></p>
+    {% endif %}
+  </section>
+{% endblock %}

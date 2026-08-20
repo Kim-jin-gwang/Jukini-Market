@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section>
+    <h1 class="page-title">내 판매 목록</h1>
+    {% if goods.length %}
+      <table class="data-table">
+        <thead>
+          <tr><th>상품</th><th>개당 가격</th><th>남은 수량</th><th>판매량</th><th>매출</th><th>상태</th></tr>
+        </thead>
+        <tbody>
+          {% for g in goods %}
+            <tr>
+              <td><a href="/good/{{g.id}}">{{g.name}}</a></td>
+              <td>{{g.price.toLocaleString()}}P</td>
+              <td>{{g.amount}}개</td>
+              <td>{{g.soldCount}}개</td>
+              <td>{{g.revenue.toLocaleString()}}P</td>
+              <td>
+                {% if g.soldOut %}<span class="state state-soldout">품절</span>
+                {% elif g.expired %}<span class="state state-ended">판매 종료</span>
+                {% else %}<span class="state state-live">판매 중</span>{% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="empty">등록한 상품이 없습니다. <a href="/good">상품 등록하기 →</a></p>
+    {% endif %}
+  </section>
+{% endblock %}

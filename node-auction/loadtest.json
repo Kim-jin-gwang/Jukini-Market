@@ -18,7 +18,7 @@
         "url": "/auth/login",
         "json": {
           "email": "demo@jukini.demo",
-          "password": "***REMOVED***"
+          "password": "jukini1234"
         }
       }
     }, {

@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section class="form-page">
+    <h1>회원가입</h1>
+    <p class="form-desc">가입하면 체험용 <strong>1,000,000 포인트</strong>가 지급됩니다.</p>
+    <form class="stack-form" action="/auth/join" method="post">
+      <label>이메일
+        <input type="email" name="email" placeholder="you@example.com" required maxlength="40">
+      </label>
+      <label>닉네임
+        <input type="text" name="nick" placeholder="쭈끼니" required maxlength="15">
+      </label>
+      <label>비밀번호
+        <input type="password" name="password" required minlength="4">
+      </label>
+      <button class="btn btn-primary btn-lg" type="submit">가입하기</button>
+    </form>
+  </section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section class="form-page">
+    <h1>문제가 발생했어요 😢</h1>
+    <p class="form-desc">{{message}}</p>
+    <a class="btn btn-primary" href="/">메인으로 돌아가기</a>
+    {% if error.stack %}
+      <pre class="error-stack">{{error.stack}}</pre>
+    {% endif %}
+  </section>
+{% endblock %}

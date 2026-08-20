@@ -44,3 +44,7 @@ lerna-debug.log*
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Local dev database
+*.sqlite
+dev.sqlite*

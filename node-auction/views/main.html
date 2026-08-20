@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section class="hero">
+    <h1>오늘 딴 채소, 오늘만 팝니다</h1>
+    <p>산지 농부가 직접 올린 신선 농산물을 <strong>등록 후 24시간 동안만</strong> 판매하는 직거래 마켓입니다.</p>
+    {% if not user %}
+      <p class="hero-demo">
+        체험 계정으로 바로 둘러보세요 — 이메일 <code>demo@jukini.demo</code> / 비밀번호 <code>jukini1234</code>
+        (100만 포인트 지급됨)
+      </p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2 class="section-title">판매 중인 상품</h2>
+    {% if goods.length %}
+      <div class="goods-grid">
+        {% for good in goods %}
+          <a class="good-card {% if good.soldOut %}sold-out{% endif %}" href="/good/{{good.id}}">
+            <div class="good-thumb">
+              <img src="/img/{{good.img}}" alt="{{good.name}}">
+              {% if good.soldOut %}<span class="thumb-badge">품절</span>{% endif %}
+            </div>
+            <div class="good-body">
+              <div class="good-name">{{good.name}}</div>
+              <div class="good-price">{{good.price.toLocaleString()}}P <small>/ 1개</small></div>
+              <div class="good-meta">
+                <span>{{good.Owner.nick}}</span>
+                <span class="stock">{% if good.soldOut %}품절{% else %}{{good.amount}}개 남음{% endif %}</span>
+              </div>
+              <div class="good-deadline" data-end="{{good.endTime.toISOString()}}">판매 종료까지 계산 중…</div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty">지금 판매 중인 상품이 없습니다. 잠시 후 다시 확인해주세요.</p>
+    {% endif %}
+  </section>
+
+  <script>
+    // 각 상품 카드의 남은 판매 시간 표시
+    const deadlines = document.querySelectorAll('.good-deadline');
+    function tick() {
+      const now = Date.now();
+      deadlines.forEach((el) => {
+        const remain = new Date(el.dataset.end) - now;
+        if (remain <= 0) {
+          el.textContent = '판매 종료';
+          el.classList.add('ended');
+          return;
+        }
+        const h = String(Math.floor(remain / 3600000)).padStart(2, '0');
+        const m = String(Math.floor(remain / 60000) % 60).padStart(2, '0');
+        const s = String(Math.floor(remain / 1000) % 60).padStart(2, '0');
+        el.textContent = `판매 종료까지 ${h}:${m}:${s}`;
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  </script>
+{% endblock %}
