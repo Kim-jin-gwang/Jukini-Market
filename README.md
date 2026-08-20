@@ -1,6 +1,6 @@
 # 🥒 Jukini-Market (쭈끼니 마켓)
 
-> **🌐 Live Demo:** 준비 중 — 게이트웨이([demo-gateway.trealight112.workers.dev](https://demo-gateway.trealight112.workers.dev/))에서 곧 공개됩니다.  
+> **🌐 Live Demo:** **[jukini-market.onrender.com](https://jukini-market.onrender.com)** — 무료 서버라 첫 접속 시 깨어나는 데 최대 1분 걸릴 수 있어요.  
 > **체험 계정:** `demo@jukini.demo` / `jukini1234` (100만 포인트 지급)  
 > **Project Date:** 2021.12.01 ~ 2021.12.15  
 > **Collaborator:** @malangcongdduck  
