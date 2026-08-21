@@ -152,6 +152,14 @@ flowchart TD
 
 ## 🛠️ 실행 및 사용 방법
 
+### 도커로 실행 (권장 — DB 포함 한 번에)
+
+```bash
+docker compose up --build
+```
+
+→ http://localhost:8010 에서 바로 체험할 수 있습니다. PostgreSQL 컨테이너가 함께 뜨고, 시드 데이터(체험 계정 `farmer@jukini.demo` / `demo@jukini.demo`, 비밀번호 `jukini1234`, 데모 상품 4종)가 자동 생성됩니다.
+
 ### 로컬 실행 (node-auction)
 
 ```bash

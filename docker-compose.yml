@@ -1,0 +1,39 @@
+# Jukini-Market 로컬 실행: docker compose up --build
+# → http://localhost:8010 (데모 계정: farmer@jukini.demo / demo@jukini.demo, 비밀번호 jukini1234)
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: jukini
+      POSTGRES_PASSWORD: jukini
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d jukini"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - jukini-pgdata:/var/lib/postgresql/data
+
+  web:
+    build: ./node-auction
+    ports:
+      - "8010:8010"
+    environment:
+      PORT: 8010
+      NODE_ENV: production
+      COOKIE_SECRET: local-docker-secret-change-me
+      # DATABASE_URL은 SSL을 강제하므로(클라우드용) 로컬 DB에는 개별 변수를 사용
+      DB_USERNAME: postgres
+      DB_PASSWORD: jukini
+      DB_DATABASE: jukini
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DIALECT: postgres
+      SIGNUP_POINT: 1000000
+      SEED_PASSWORD: jukini1234
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  jukini-pgdata:
