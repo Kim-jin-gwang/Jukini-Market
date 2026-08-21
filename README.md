@@ -52,7 +52,9 @@ Jukini-Market/
 │   ├── socket.js             # Socket.io: 상품별 룸 실시간 구매 중계
 │   ├── sse.js                # SSE: 서버 시계 브로드캐스트 (카운트다운용)
 │   ├── seed.js               # 데모 시드 데이터 (계정/상품)
-│   └── checkAuction.js       # 판매 종료 후속 처리 + 데모 상품 자동 재등록 잡
+│   ├── checkAuction.js       # 판매 종료 후속 처리 + 데모 상품 자동 재등록 잡
+│   └── Dockerfile            # 앱 도커 이미지
+├── docker-compose.yml        # 앱 + PostgreSQL 로컬 실행 (docker compose up --build)
 ├── auction_api/              # 외부 전송용 OpenAPI 서버 (JWT + 도메인 기반 CORS)
 └── auctioncat/               # API 클라이언트 연동 데모 앱
 ```
